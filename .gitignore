@@ -3,3 +3,5 @@ output/*
 input/*
 
 functions/__pycache__/
+
+shellcode/
