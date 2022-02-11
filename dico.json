@@ -1,0 +1,18 @@
+{
+    "values": {
+        "set0": [
+            "xor ${REG}, reg",
+            "push rXx \n xor rXx, rXx \n mov reg, rXx \n pop rXx"
+        ],
+        "add0": [],
+        "sub0": [],
+        "mov0": []
+    },
+    "searches": {
+        "xor reg, reg" : "set0",
+        "2" : "add0",
+        "3" : "mov0",
+        "mov reg, 0x00" : "set0",
+        "5" : "sub0"
+    }
+}
