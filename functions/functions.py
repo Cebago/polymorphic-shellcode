@@ -1,5 +1,5 @@
 import os
-
+import re
 import json
 
 registers = ["rax", "rbx", "rcx", "rdx", "rdi", "rsi", "r8", "r9", "r10", "r11", "r12", "r13", "r14", "r15"]
@@ -49,7 +49,9 @@ def displayFile(folder, file):
     os.system('less ' + './' + folder + '/' + file)
 
 def verifyFile(folder, file):
-    print(file)
-    f = open('./' + folder + '/' + file, 'r')
-    content = f.read()
-    print(content)
+    with open('./' + folder + '/' + file, 'r') as f:
+        content = f.read()
+    search = re.search(".*\\\\x00.*", str(content))
+    if search:
+        return False
+    return True

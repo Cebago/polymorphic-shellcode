@@ -39,8 +39,10 @@ while not quit:
         print("Which file do you want to scan ?")
         file = selectFile("shellcode")
         if file != False:
-            verifyFile("shellcode", file)
-            print("goToFunction")
+            if verifyFile("shellcode", file):
+                print("No null bytes detected")
+            else:
+                print("OhOh! A null byte was found")
         print("=====End Shellcode scanner=====\n\n\n")
     elif choice == "5":
         quit = True
