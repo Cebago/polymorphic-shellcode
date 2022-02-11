@@ -32,9 +32,9 @@ def openDico():
     file.close()
     return tabDico
 
-""" def readAsm(search):
+def readAsm(search):
 
-    toModify = [][] #tableau 2 dimensions pour mettre la ligne remplçable et le numéro de la ligne remplaçable
+    toModify = [] #tableau 2 dimensions pour mettre la ligne remplçable et le numéro de la ligne remplaçable
     try:
         file = open("test.asm", "r")
         for line in enumerate(file):
@@ -43,7 +43,7 @@ def openDico():
                 if search == line:
                     toModify.append([line][search])
     finally:
-        file.close() """
+        file.close()
 
 def displayFile(folder, file):
     os.system('less ' + './' + folder + '/' + file)
