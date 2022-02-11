@@ -9,7 +9,9 @@ Transformer un code assembleur pour exécuter la même fonction mais avec des in
 
 ## Développement
 Etapes:
-1. toto
+[ ] Rechercher des marqueurs pouvant être changé
+[ ] Associer un label de `dico.json` à ce marqueur
+[ ] Remplacer le marqueur par l'une des alternatives proposées dans le `dico.json`
 
 ## Utilisation:
 1. Peupler le fichier `dico.json`
