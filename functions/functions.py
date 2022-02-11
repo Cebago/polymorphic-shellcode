@@ -1,5 +1,4 @@
 import os
-import string
 
 import json
 
@@ -15,7 +14,7 @@ def selectFile(folder):
         try:
             x = int(file)
             if (x >= 1 and x <= len(files)):
-                return file
+                return files[x-1]
             else:
                 print("Not a good value")                
         except ValueError:
@@ -33,7 +32,7 @@ def openDico():
     file.close()
     return tabDico
 
-def readAsm(search):
+""" def readAsm(search):
 
     toModify = [][] #tableau 2 dimensions pour mettre la ligne remplçable et le numéro de la ligne remplaçable
     try:
@@ -44,5 +43,13 @@ def readAsm(search):
                 if search == line:
                     toModify.append([line][search])
     finally:
-        file.close()
+        file.close() """
 
+def displayFile(folder, file):
+    os.system('less ' + './' + folder + '/' + file)
+
+def verifyFile(folder, file):
+    print(file)
+    f = open('./' + folder + '/' + file, 'r')
+    content = f.read()
+    print(content)
