@@ -55,3 +55,12 @@ def verifyFile(folder, file):
     if search:
         return False
     return True
+
+def replaceInStr(str):
+    str = "mov rax, 1"
+    split = re.split(r"\, |\,| ", str)
+    for x in split:
+        if x in registers:
+            # returnStr += "${REG}"
+            returnStr = re.sub(x, "${REG}", str)
+    return returnStr

@@ -51,3 +51,4 @@ while not quit:
 
 search = openDico()
 readAsm(search)
+replaceInStr("toto")
