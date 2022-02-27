@@ -3,6 +3,7 @@ import re
 import json
 
 registers = ["rax", "rbx", "rcx", "rdx", "rdi", "rsi", "r8", "r9", "r10", "r11", "r12", "r13", "r14", "r15"]
+reg = []
 
 def selectFile(folder):
     while True:
@@ -58,12 +59,17 @@ def verifyFile(folder, file):
 
 def replaceInStr(str):
     split = re.split(r"\, |\,| ", str)
-    reg = []
     returnStr = str
+    tmp = []
     for x in split:
         if x in registers:
             returnStr = re.sub(x, "${REG}", returnStr)
-            reg.append(x)
+            tmp.append(x)
+        elif re.search("[0-9]+", x):
+            returnStr = re.sub(x, "${VAR}", returnStr)
+            tmp.append(x)
+    if len(tmp) != 0:
+        reg.append(tmp)
     # CALL FUNCTION FOR SEARCHING AN ALIAS IN DICO JSON
     print(returnStr)
     print(reg)
