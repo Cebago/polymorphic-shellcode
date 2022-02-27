@@ -51,4 +51,6 @@ while not quit:
 
 search = openDico()
 readAsm(search)
-replaceInStr("mox rax, rdx")
+replaceInStr("mov rax, rdx")
+replaceInStr("mov r8, 5")
+replaceInStr("pop rbx")
