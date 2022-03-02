@@ -38,15 +38,15 @@ def returnKeyDico(search):
         keyDico.append(key)
     return keyDico
 
-
-def readAsm(search):
+def returnValueDico(search):
+    valueDico = []        
+    for key in search:
+        valueDico.append(search[key])
+    return valueDico
+       
+def readAsm(keyDico,valueDico):
 
     toModify = [] #tableau 2 dimensions pour mettre la ligne remplçable et le numéro de la ligne remplaçable
-
-    valueDico = []
-
-
-
     try:
         shellcode = open("test.asm", "r")
         for line in enumerate(shellcode):
