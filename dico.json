@@ -2,7 +2,7 @@
     "values": {
         "set0": [
             "xor ${REG}, reg",
-            "push rXx \n xor rXx, rXx \n mov reg, rXx \n pop rXx"
+            "push rXx\nxor rXx,rXx \nmov reg,rXx \npop rXx"
         ],
         "add0": [],
         "sub0": [],

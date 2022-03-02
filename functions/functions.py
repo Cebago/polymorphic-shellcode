@@ -41,7 +41,8 @@ def readAsm(search):
             for key in search["searches"]:
                 if key == line[1]:
                     toModify.append(line[0])
-                    toModify.append(search["searches"][key])    
+                    toModify.append(search["searches"][key])
+                    toModify.append(line[1])    
     finally:
         shellcode.close()
 
@@ -72,6 +73,7 @@ def replaceInStr(str):
     if len(tmp) != 0:
         reg.append(tmp)
     # CALL FUNCTION FOR SEARCHING AN ALIAS IN DICO JSON
+    alias = aliasDico()
     print(returnStr)
     print(reg)
     return returnStr
@@ -81,8 +83,8 @@ def aliasDico(toModify, search):
     for keyword in search["values"]:
         for value in toModify:
             if keyword == value:
-                toReplace.append(search["values"][keyword])
-                print(toReplace)
+                for values in search["values"][keyword]:
+                    toReplace.append(values)
     return toReplace
                     
 
