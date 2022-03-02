@@ -27,9 +27,7 @@ def openDico():
     tabDico = []
     file = open("dico.json")
     data = json.load(file)
-    for search in data['searches']:
-        #print(search)
-        tabDico.append(search)
+    tabDico.append(data['searches'])
     file.close()
     return tabDico
 
@@ -40,13 +38,17 @@ def readAsm(search):
     try:
         shellcode = open("test.asm", "r")
         for line in enumerate(shellcode):
-            for searchDico in search:
-                #print(searchDico)
-                if searchDico == line[1]:
+            for key,value in search.items():
+                print(key)
+                print(value)
+                if key == line[1]:
                     toModify.append(line[0])
-                    toModify.append(searchDico)
+                    toModify.append(value)
+                    
     finally:
         shellcode.close()
+
+        return toModify
 
 def displayFile(folder, file):
     os.system('less ' + './' + folder + '/' + file)
@@ -76,3 +78,7 @@ def replaceInStr(str):
     print(returnStr)
     print(reg)
     return returnStr
+
+#def aliasDico(toModify):
+
+
