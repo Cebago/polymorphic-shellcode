@@ -76,5 +76,13 @@ def replaceInStr(str):
     print(reg)
     return returnStr
 
-#def aliasDico(toModify):
+def aliasDico(toModify, search):
+    toReplace = []
+    for keyword in search["values"]:
+        for value in toModify:
+            if keyword == value:
+                toReplace.append(search["values"][keyword])
+                print(toReplace)
+    return toReplace
+                    
 
