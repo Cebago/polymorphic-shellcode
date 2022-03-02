@@ -24,26 +24,36 @@ def selectFile(folder):
             print("Not a good value")
 
 def openDico():
-    tabDico = []
+    keyDico = []
+    valueDico = []
     file = open("dico.json")
     data = json.load(file)
-    tabDico.append(data['searches'])
+    tabDico = data['searches']        
     file.close()
     return tabDico
+
+def returnKeyDico(search):
+    keyDico = []   
+    for key in search:
+        keyDico.append(key)
+    return keyDico
+
 
 def readAsm(search):
 
     toModify = [] #tableau 2 dimensions pour mettre la ligne remplçable et le numéro de la ligne remplaçable
-    tmp = []
+
+    valueDico = []
+
+
+
     try:
         shellcode = open("test.asm", "r")
         for line in enumerate(shellcode):
-            for key,value in search.items():
-                print(key)
-                print(value)
-                if key == line[1]:
+                if keyDico == line[1]:
+                    print("keyDico")
                     toModify.append(line[0])
-                    toModify.append(value)
+                    toModify.append(valueDico)
                     
     finally:
         shellcode.close()
