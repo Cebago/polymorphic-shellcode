@@ -27,38 +27,21 @@ def openDico():
     keyDico = []
     valueDico = []
     file = open("dico.json")
-    data = json.load(file)
-    tabDico = data['searches']        
+    data = json.load(file)     
     file.close()
-    return tabDico
+    return data
 
-def returnKeyDico(search):
-    keyDico = []   
-    for key in search:
-        keyDico.append(key)
-    return keyDico
-
-def returnValueDico(search):
-    valueDico = []        
-    for key in search:
-        valueDico.append(search[key])
-    return valueDico
        
 def readAsm(search):
-    keyDico = returnKeyDico(search)
-    valueDico = returnValueDico(search)
-    print(valueDico)
 
     toModify = [] #tableau 2 dimensions pour mettre la ligne remplçable et le numéro de la ligne remplaçable
     try:
         shellcode = open("test.asm", "r")
         for line in enumerate(shellcode):
-            for key in search:
+            for key in search["searches"]:
                 if key == line[1]:
-                    print("keyDico")
                     toModify.append(line[0])
-                    toModify.append(search[key])
-                    print(search[key])      
+                    toModify.append(search["searches"][key])    
     finally:
         shellcode.close()
 
@@ -94,5 +77,4 @@ def replaceInStr(str):
     return returnStr
 
 #def aliasDico(toModify):
-
 
