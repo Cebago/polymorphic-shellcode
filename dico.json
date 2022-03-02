@@ -5,7 +5,9 @@
             "push rXx\nxor rXx,rXx \nmov reg,rXx \npop rXx"
         ],
         "add0": [],
-        "sub0": [],
+        "sub0": [
+            "mov rax, 0x00\nxor ${REG}, rax"
+        ],
         "mov0": []
     },
     "searches": {
