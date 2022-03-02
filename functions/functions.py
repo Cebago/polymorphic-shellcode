@@ -44,21 +44,25 @@ def returnValueDico(search):
         valueDico.append(search[key])
     return valueDico
        
-def readAsm(keyDico,valueDico):
+def readAsm(search):
+    keyDico = returnKeyDico(search)
+    valueDico = returnValueDico(search)
+    print(valueDico)
 
     toModify = [] #tableau 2 dimensions pour mettre la ligne remplçable et le numéro de la ligne remplaçable
     try:
         shellcode = open("test.asm", "r")
         for line in enumerate(shellcode):
-                if keyDico == line[1]:
+            for key in search:
+                if key == line[1]:
                     print("keyDico")
                     toModify.append(line[0])
-                    toModify.append(valueDico)
-                    
+                    toModify.append(search[key])
+                    print(search[key])      
     finally:
         shellcode.close()
 
-        return toModify
+    return toModify
 
 def displayFile(folder, file):
     os.system('less ' + './' + folder + '/' + file)
