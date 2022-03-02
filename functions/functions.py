@@ -28,7 +28,7 @@ def openDico():
     file = open("dico.json")
     data = json.load(file)
     for search in data['searches']:
-        # print(search)
+        #print(search)
         tabDico.append(search)
     file.close()
     return tabDico
@@ -36,15 +36,17 @@ def openDico():
 def readAsm(search):
 
     toModify = [] #tableau 2 dimensions pour mettre la ligne remplçable et le numéro de la ligne remplaçable
+    tmp = []
     try:
-        file = open("test.asm", "r")
-        for line in enumerate(file):
-            print(line) 
+        shellcode = open("test.asm", "r")
+        for line in enumerate(shellcode):
             for searchDico in search:
-                if search == line:
-                    toModify.append([line][search])
+                #print(searchDico)
+                if searchDico == line[1]:
+                    toModify.append(line[0])
+                    toModify.append(searchDico)
     finally:
-        file.close()
+        shellcode.close()
 
 def displayFile(folder, file):
     os.system('less ' + './' + folder + '/' + file)

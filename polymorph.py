@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from functions.functions import *;
-
+"""
 print("Welcome to the Polymorphic Shellcode Tool from the Cebago TEAM")
 
 quit = False
@@ -48,9 +48,9 @@ while not quit:
         quit = True
     else:
         print("Bad choice")
-
+"""
 search = openDico()
 readAsm(search)
-replaceInStr("mov rax, rdx")
-replaceInStr("mov r8, 5")
-replaceInStr("pop rbx")
+#replaceInStr("mov rax, rdx")
+#replaceInStr("mov r8, 5")
+#replaceInStr("pop rbx")

@@ -4,3 +4,4 @@ how
 are
 you 
 ?
+xor reg, reg
