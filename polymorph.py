@@ -50,9 +50,10 @@ while not quit:
         print("Bad choice")
 """
 search = openDico()
-toModify = readAsm(search)
+#toModify = readAsm(search)
 readAsm(search)
-aliasDico(toModify,search)
+#aliasDico(toModify,search)
 #replaceInStr("mov rax, rdx")
 #replaceInStr("mov r8, 5")
 #replaceInStr("pop rbx")
+#print(re.search(r"xor r[acd][xi], r[acd][xi]", "xor rax, rdi"))

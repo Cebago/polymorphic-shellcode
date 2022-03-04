@@ -11,7 +11,7 @@
         "mov0": []
     },
     "searches": {
-        "xor reg, reg" : "set0",
+        "xor r[acd][xi], r[acd][xi]" : "set0",
         "2" : "add0",
         "3" : "mov0",
         "mov reg, 0x00" : "set0",

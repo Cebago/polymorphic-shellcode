@@ -37,12 +37,11 @@ def readAsm(search):
     toModify = [] #tableau 2 dimensions pour mettre la ligne remplçable et le numéro de la ligne remplaçable
     try:
         shellcode = open("test.asm", "r")
-        for line in enumerate(shellcode):
+        #while shellcode != EOF:
+        for line in shellcode:
             for key in search["searches"]:
-                if key == line[1]:
-                    toModify.append(line[0])
-                    toModify.append(search["searches"][key])
-                    toModify.append(line[1])    
+                if  re.search(key,repr(line)):
+                    aliasDico(key)
     finally:
         shellcode.close()
 
@@ -78,7 +77,7 @@ def replaceInStr(str):
     print(reg)
     return returnStr
 
-def aliasDico(toModify, search):
+def aliasDico(toModify, search, key):
     toReplace = []
     for keyword in search["values"]:
         for value in toModify:
