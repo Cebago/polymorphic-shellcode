@@ -1,6 +1,7 @@
 import os
 import re
 import json
+import random
 
 registers = ["rax", "rbx", "rcx", "rdx", "rdi", "rsi", "r8", "r9", "r10", "r11", "r12", "r13", "r14", "r15"]
 reg = []
@@ -31,20 +32,28 @@ def openDico():
     file.close()
     return data
 
-       
-def readAsm(search):
 
+
+def getRandomReg(current_reg):
+    while(True):
+        random_reg = random.choice(registers)
+        if(random_reg != current_reg):
+            return random_reg
+
+
+print(getRandomReg("rax"))
+
+def readAsm(search):
     toModify = [] #tableau 2 dimensions pour mettre la ligne remplçable et le numéro de la ligne remplaçable
     with open("test.asm", "r") as shellcode:
-        shellcode = open("test.asm", "r")
         #while shellcode != EOF:
         for line in shellcode:
+            #print(replaceInStr(line))
             for key in search["searches"]:
                 if  re.search(key,repr(line)):
                     #aliasDico(key)
                     print(f"founded : {line}")
    
-
     return toModify
 
 def displayFile(folder, file):
