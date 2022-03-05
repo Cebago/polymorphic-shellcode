@@ -2,10 +2,15 @@
     "values": {
         "set0": [
             "xor ${REG}, reg",
+            "push rXx\nxor rXx,rXx \nmov reg,rXx \npop rXx"
             "mov ${REG}, 0xFF \n sub ${REG} 0xFF",
             "mov ${REG}, 0x01 \n dec ${REG}",
             "push rax \n xor rax, rax \nmov ${REG}, rax \npop rax",
             "push 0xFF \n pop ${REG} \nsub ${REG} 0xFF"
+        ],
+        "add0": [],
+        "sub0": [
+            "mov rax, 0x00\nxor ${REG}, rax"
         ],
         "setVal": [
             "mov ${REG}"
@@ -15,6 +20,8 @@
         "mov0": []
     },
     "searches": {
+        "xor r[acd][xi], r[acd][xi]" : "set0",
+        "2" : "add0",
         "xor ${REG}, ${REG}" : "set0",
         "mov ${REG}, ${VAL}" : "setVal",
         "" : "add0",

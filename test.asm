@@ -1,6 +1,2 @@
-hello
-hi!
-how
-are
-you 
-?
+xor rax, rdi 
+mov reg, 0x00
