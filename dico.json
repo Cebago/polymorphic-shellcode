@@ -7,26 +7,31 @@
             "mov ${VAL1}, 0x01 \n dec ${VAL1}",
             "push 0xFF \n pop ${VAL1} \nsub ${VAL1} 0xFF"
         ],
-        "add0": [],
-        "sub0": [
-            "mov rax, 0x00\nxor ${REG}, rax"
+        "add": [
+            "add ${VAL1}, ${VAL2}",
+            "push ${REG}\nmov ${REG}, ${VAL1}\nadd ${REG}, ${VAL2}\nmov ${VAL1}, ${REG}, pop ${REG}",
+            "push ${REG}\nmov ${REG}, ${VAL2}\nadd ${REG}, ${VAL1}\nmov ${VAL1}, ${REG}, pop ${REG}",
+            "push ${REG}\npush ${VAL1}, pop ${REG}\nadd ${REG}, ${VAL2}\nadd ${VAL1}, ${REG}\npop ${REG}"
+        ],
+        "sub": [
+            "sub ${VAL1}, ${VAL2}",
+            "push ${REG}\nmov ${REG}, ${VAL1}\nsub ${REG}, ${VAL2}\nmov ${VAL1}, ${REG}, pop ${REG}",
+            "push ${REG}\nmov ${REG}, ${VAL2}\nsub ${REG}, ${VAL1}\nmov ${VAL1}, ${REG}, pop ${REG}",
+            "push ${REG}\npush ${VAL1}, pop ${REG}\nsub ${REG}, ${VAL2}\nadd ${VAL1}, ${REG}\npop ${REG}"
+            
         ],
         "setVal": [
-            "mov ${REG}",
-            "push ${VAL2} \npop ${VAL1}"
+            "mov ${VAL1}, ${VAL2}",
+            "push ${VAL2}\npop ${VAL1}",
+            "push ${REG}\npush ${VAL2}\npop ${REG}\nmov ${VAL1},${REG}\npop ${REG}",
+            "push ${REG}\nmov ${REG} ${VAL2}\nmov ${VAL1},${REG}\npop ${REG}"
+        ]
 
-        ],
-        "sub0": [],
-        "mov0": []
     },
     "searches": {
-        "xor r[acd][xi], r[acd][xi]": "set0",
-        "2": "add0",
-        "xor ${REG}, ${REG}": "set0",
-        "mov ${VAL1}, ${VAL2}": "setVal",
-        "": "add0",
-        "3": "mov0",
-        "mov reg, 0x00": "set0",
-        "5": "sub0"
+        "xor ${VAL1}, ${VAL1}": "set0",
+        "add ${VAL1}, ${VAL2}": "add",
+        "sub ${VAL1}, ${VAL2}": "sub",
+        "mov ${VAL1}, ${VAL2}": "setVal"
     }
 }
