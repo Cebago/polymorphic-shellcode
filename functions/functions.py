@@ -104,7 +104,7 @@ def replaceInStr(str):
     #alias = aliasDico()
     #print(str)
     #print([returnStr, reg])
-    return [returnStr, reg] # ["mov ${REG}, ${VAR}", ["rax", 5]]
+    return [returnStr.strip(), reg] # ["mov ${REG}, ${VAR}", ["rax", 5]]
 
 def aliasDico(search, key, value):
     for keyword in search["values"]:
