@@ -24,14 +24,10 @@ def selectFile(folder):
             print("Not a good value")
 
 def openDico():
-    keyDico = []
-    valueDico = []
     file = open("dico.json")
     data = json.load(file)     
     file.close()
     return data
-
-
 
 def getRandomReg(current_reg):
     while(True):
@@ -49,12 +45,12 @@ def readAsm(search):
         #while shellcode != EOF:
         for line in shellcode:
             str = replaceInStr(line)
-            print(str[0])
             for key in search["searches"]:
                 if  str[0] == key:
                     #aliasDico(key)
                     #print(f"founded : {line}")
-                    print("ok")
+                    toModify = aliasDico(search, search["searches"][key])
+                    #appelle aliasDico(search["searches"][key], search, str) => renvoie l'un des choix dans set0
    
     return toModify
 
@@ -71,9 +67,9 @@ def verifyFile(folder, file):
 
 def replaceInStr(str):
     reg = []
-    split = re.split(r"\, |\,| ", str) # mov rax, 5 => ["mov", "rax", "5"] | xor rax, rax
+    split = re.split(r"\, |\,| | \n|\n", str) # mov rax, 5 => ["mov", "rax", "5"] | xor rax, rax
     returnStr = str
-    tmp = []
+    #tmp = []
     for iterator in range (0, len(split)):
         val = "${{VAL{}}}".format(iterator)
         if split[iterator] in registers:
@@ -84,20 +80,18 @@ def replaceInStr(str):
             # mov ${REG}, 5 => mov ${REG}, ${VAR}
             returnStr = re.sub(split[iterator], val, returnStr)
             reg.append(split[iterator])  # [rax, 5]
-    if len(tmp) != 0:
-        reg.append(tmp)
+    #if len(tmp) != 0:
+    #    reg.append(tmp)
     #alias = aliasDico()
     #print(str)
     #print([returnStr, reg])
-    return [returnStr, reg] # ["mov ${REG}, ${VAR}", ["rax", 5]]
+    return [returnStr.strip(), reg] # ["mov ${REG}, ${VAR}", ["rax", 5]]
 
-def aliasDico(search, key, value):
+def aliasDico(search, keyDico):
 
-    for keyword in search["values"]:
-        if keyword == value:
-            if not search["values"][keyword] == key:
-                print("ok")
-    return 0
+    toModify = random.choice(search["values"][keyDico])
+    print(repr(toModify))
+    return toModify
 
                     
 

@@ -1,7 +1,7 @@
 {
     "values": {
         "set0": [
-            "xor ${VAL1}, ${VAL1}",
+            "xor ${VAL1}, ${VAL2}",
             "push ${REG}\nxor ${REG},${REG} \nmov ${VAL1},${REG} \npop ${REG}",
             "mov ${VAL1}, 0xFF \n sub ${VAL1} 0xFF",
             "mov ${VAL1}, 0x01 \n dec ${VAL1}",
@@ -21,12 +21,8 @@
     },
     "searches": {
         "xor r[acd][xi], r[acd][xi]": "set0",
-        "2": "add0",
-        "xor ${REG}, ${REG}": "set0",
+        "xor ${VAL1}, ${VAL2}": "set0",
         "mov ${VAL1}, ${VAL2}": "setVal",
-        "": "add0",
-        "3": "mov0",
-        "mov reg, 0x00": "set0",
-        "5": "sub0"
+        "mov reg, 0x00": "set0"
     }
 }
