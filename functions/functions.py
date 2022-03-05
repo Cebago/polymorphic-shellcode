@@ -35,15 +35,15 @@ def openDico():
 def readAsm(search):
 
     toModify = [] #tableau 2 dimensions pour mettre la ligne remplçable et le numéro de la ligne remplaçable
-    try:
+    with open("test.asm", "r") as shellcode:
         shellcode = open("test.asm", "r")
         #while shellcode != EOF:
         for line in shellcode:
             for key in search["searches"]:
                 if  re.search(key,repr(line)):
-                    aliasDico(key)
-    finally:
-        shellcode.close()
+                    #aliasDico(key)
+                    print(f"founded : {line}")
+   
 
     return toModify
 
