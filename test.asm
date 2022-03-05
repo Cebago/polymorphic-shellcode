@@ -1,2 +1,2 @@
-xor rax, rdi 
-mov reg, 0x00
+xor rax, rdi
+mov rbx, 0x00

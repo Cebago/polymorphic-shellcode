@@ -40,18 +40,21 @@ def getRandomReg(current_reg):
             return random_reg
 
 
-print(getRandomReg("rax"))
+#print(getRandomReg("rax"))
 
 def readAsm(search):
+
     toModify = [] #tableau 2 dimensions pour mettre la ligne remplçable et le numéro de la ligne remplaçable
     with open("test.asm", "r") as shellcode:
         #while shellcode != EOF:
         for line in shellcode:
-            #print(replaceInStr(line))
+            str = replaceInStr(line)
+            print(str[0])
             for key in search["searches"]:
-                if  re.search(key,repr(line)):
+                if  str[0] == key:
                     #aliasDico(key)
-                    print(f"founded : {line}")
+                    #print(f"founded : {line}")
+                    print("ok")
    
     return toModify
 
@@ -84,17 +87,17 @@ def replaceInStr(str):
     if len(tmp) != 0:
         reg.append(tmp)
     #alias = aliasDico()
-    print(str)
-    print([returnStr, reg])
+    #print(str)
+    #print([returnStr, reg])
     return [returnStr, reg] # ["mov ${REG}, ${VAR}", ["rax", 5]]
 
-def aliasDico(toModify, search, key):
-    toReplace = []
+def aliasDico(search, key, value):
+
     for keyword in search["values"]:
-        for value in toModify:
-            if keyword == value:
-                for values in search["values"][keyword]:
-                    toReplace.append(values)
-    return toReplace
+        if keyword == value:
+            if not search["values"][keyword] == key:
+                print("ok")
+    return 0
+
                     
 
