@@ -67,23 +67,26 @@ def verifyFile(folder, file):
     return True
 
 def replaceInStr(str):
-    split = re.split(r"\, |\,| ", str)
+    reg = []
+    split = re.split(r"\, |\,| ", str) # mov rax, 5 => ["mov", "rax", "5"] | xor rax, rax
     returnStr = str
     tmp = []
-    for x in split:
-        if x in registers:
-            returnStr = re.sub(x, "${REG}", returnStr)
-            tmp.append(x)
-        elif re.search("[0-9]+", x):
-            returnStr = re.sub(x, "${VAR}", returnStr)
-            tmp.append(x)
+    for iterator in range (0, len(split)):
+        val = "${{VAL{}}}".format(iterator)
+        if split[iterator] in registers:
+            # mov rax, 5 => mov ${REG}, 5
+            returnStr = re.sub(split[iterator], val , returnStr)
+            reg.append(split[iterator])  # [rax]
+        elif re.search("[0-9]+", split[iterator]):
+            # mov ${REG}, 5 => mov ${REG}, ${VAR}
+            returnStr = re.sub(split[iterator], val, returnStr)
+            reg.append(split[iterator])  # [rax, 5]
     if len(tmp) != 0:
         reg.append(tmp)
-    # CALL FUNCTION FOR SEARCHING AN ALIAS IN DICO JSON
-    alias = aliasDico()
-    print(returnStr)
-    print(reg)
-    return returnStr
+    #alias = aliasDico()
+    print(str)
+    print([returnStr, reg])
+    return [returnStr, reg] # ["mov ${REG}, ${VAR}", ["rax", 5]]
 
 def aliasDico(toModify, search, key):
     toReplace = []
