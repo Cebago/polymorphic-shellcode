@@ -51,9 +51,9 @@ while not quit:
 """
 search = openDico()
 #toModify = readAsm(search)
-readAsm(search)
+#readAsm(search)
 #aliasDico(toModify,search)
-#replaceInStr("mov rax, rdx")
-#replaceInStr("mov r8, 5")
-#replaceInStr("pop rbx")
+replaceInStr("mov rax, rdx")
+replaceInStr("mov r8, 5")
+replaceInStr("pop rbx")
 #print(re.search(r"xor r[acd][xi], r[acd][xi]", "xor rax, rdi"))
