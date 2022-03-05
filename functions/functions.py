@@ -88,7 +88,6 @@ def replaceInStr(str):
     reg = [] 
     split = re.split(r"\, |\,| ", str) # mov rax, 5 => ["mov", "rax", "5"] | xor rax, rax
     returnStr = str
-    tmp = []
     for iterator in range (0, len(split)):
         val = "${{VAL{}}}".format(iterator)
         if split[iterator] in registers:
@@ -99,11 +98,6 @@ def replaceInStr(str):
             # mov ${REG}, 5 => mov ${REG}, ${VAR}
             returnStr = re.sub(split[iterator], val, returnStr)
             reg.append(split[iterator])  # [rax, 5]
-    if len(tmp) != 0:
-        reg.append(tmp)
-    #alias = aliasDico()
-    #print(str)
-    #print([returnStr, reg])
     return [returnStr.strip(), reg] # ["mov ${REG}, ${VAR}", ["rax", 5]]
 
 def aliasDico(search, key, value):
