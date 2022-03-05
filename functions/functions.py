@@ -33,45 +33,67 @@ def openDico():
 
 
 
-def getRandomReg(current_reg):
+def getRandomReg(current_reg_tab):
     while(True):
         random_reg = random.choice(registers)
-        if(random_reg != current_reg):
+        if(random_reg not in current_reg_tab):
             return random_reg
 
 
 #print(getRandomReg("rax"))
 
+def replace(val_tab, replacement, random_reg = False):
+    if random_reg:
+        replacement = re.sub(r"\${REG}", random_reg, replacement)
+        
+    replacement = re.sub(r"\${VAL1}", val_tab[0], replacement)
+    replacement = re.sub(r"\${VAL2}", val_tab[1], replacement)
+    return replacement 
+
+
 def getReplacement(tab_dico, action_key, val_tab):
     replacement = random.choice(tab_dico["values"][action_key])
     random_reg = getRandomReg(val_tab[0])
-    replacement = re.sub(r"\${REG}", random_reg, replacement)
-    replacement = re.sub(r"\${VAL1}", val_tab[0], replacement)
-    replacement = re.sub(r"\${VAL2}", val_tab[1], replacement)
-    
-
-    print(f"\n\nValeur de remplacement \n{replacement}\n\n")
+   
     return replacement
+
+def getRandomReplacement(tab_dico, action_key, current_value):
+    while(True):
+        random_replacement = random.choice(tab_dico[action_key])
+        if(random_replacement != current_value):
+            return random_replacement
+
+
 
 def readAsm(search):
 
-    toModify = [] #tableau 2 dimensions pour mettre la ligne remplçable et le numéro de la ligne remplaçable
-    with open("test.asm", "r") as shellcode:
-        #while shellcode != EOF:
-        for line in shellcode:
-            str = replaceInStr(line)
-            for key in search["searches"]:
-                print(f"key: {str[0]}")
-                if  str[0] == key:
-                    print("élément similaire trouvé")
-                    #print(f"values : {str[1]}")
-                    replace_value = getReplacement(search, search["searches"][key], str[1])
-                    #aliasDico(key)
-                    #print(f"founded : {line}")
+    with open("test.asm", "r") as input:
+        with open("output.asm", "wt") as output:
+            for line in input:
+                str = replaceInStr(line)
+                founded = False
+                for key in search["searches"]:
+                    if  str[0] == key:
+                        print(f"élément :{str}")
+                        #print(f"values : {str[1]}")
+                        replace_value_patern = getRandomReplacement(search["values"], search["searches"][key], str)
 
+                
+                        if re.search(r"\${REG}",replace_value_patern):
+                            random_reg= getRandomReg(str[1])
+                        else:
+                            random_reg = False
+
+                        replace_value = replace(str[1], replace_value_patern, random_reg)
+
+
+                        output.write(replace_value)
+                        founded = True
+                if not founded:
+                    output.write(line)
 
    
-    return toModify
+    return 'ok'
 
 def displayFile(folder, file):
     os.system('less ' + './' + folder + '/' + file)
@@ -86,14 +108,17 @@ def verifyFile(folder, file):
 
 def replaceInStr(str):
     reg = [] 
-    split = re.split(r"\, |\,| ", str) # mov rax, 5 => ["mov", "rax", "5"] | xor rax, rax
+
+    str = str.split(";")[0]
+    str = str.strip()
+    split = re.split(r"\, |\,| |\n| \n", str) # mov rax, 5 => ["mov", "rax", "5"] | xor rax, rax
     returnStr = str
     for iterator in range (0, len(split)):
         val = "${{VAL{}}}".format(iterator)
         if split[iterator] in registers:
             # mov rax, 5 => mov ${REG}, 5
             returnStr = re.sub(split[iterator], val , returnStr)
-            reg.append(split[iterator])  # [rax]
+            reg.append(split[iterator].strip())  # [rax]
         elif re.search("[0-9]+", split[iterator]):
             # mov ${REG}, 5 => mov ${REG}, ${VAR}
             returnStr = re.sub(split[iterator], val, returnStr)
