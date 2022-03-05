@@ -3,9 +3,9 @@
         "set0": [
             "xor ${VAL1}, ${VAL2}",
             "push ${REG}\nxor ${REG},${REG} \nmov ${VAL1},${REG} \npop ${REG}",
-            "mov ${VAL1}, 0xFF \n sub ${VAL1} 0xFF",
-            "mov ${VAL1}, 0x01 \n dec ${VAL1}",
-            "push 0xFF \n pop ${VAL1} \nsub ${VAL1} 0xFF"
+            "mov ${VAL1}, 0xFF \nsub ${VAL1} 0xFF",
+            "mov ${VAL1}, 0x01 \ndec ${VAL1}",
+            "push 0xFF \npop ${VAL1} \nsub ${VAL1} 0xFF"
         ],
         "add": [
             "add ${VAL1}, ${VAL2}",

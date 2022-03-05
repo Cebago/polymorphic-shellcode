@@ -42,6 +42,17 @@ def getRandomReg(current_reg):
 
 #print(getRandomReg("rax"))
 
+def getReplacement(tab_dico, action_key, val_tab):
+    replacement = random.choice(tab_dico["values"][action_key])
+    random_reg = getRandomReg(val_tab[0])
+    replacement = re.sub(r"\${REG}", random_reg, replacement)
+    replacement = re.sub(r"\${VAL1}", val_tab[0], replacement)
+    replacement = re.sub(r"\${VAL2}", val_tab[1], replacement)
+    
+
+    print(f"\n\nValeur de remplacement \n{replacement}\n\n")
+    return replacement
+
 def readAsm(search):
 
     toModify = [] #tableau 2 dimensions pour mettre la ligne remplçable et le numéro de la ligne remplaçable
@@ -49,12 +60,16 @@ def readAsm(search):
         #while shellcode != EOF:
         for line in shellcode:
             str = replaceInStr(line)
-            print(str[0])
             for key in search["searches"]:
+                print(f"key: {str[0]}")
                 if  str[0] == key:
+                    print("élément similaire trouvé")
+                    #print(f"values : {str[1]}")
+                    replace_value = getReplacement(search, search["searches"][key], str[1])
                     #aliasDico(key)
                     #print(f"founded : {line}")
-                    print("ok")
+
+
    
     return toModify
 
@@ -70,7 +85,7 @@ def verifyFile(folder, file):
     return True
 
 def replaceInStr(str):
-    reg = []
+    reg = [] 
     split = re.split(r"\, |\,| ", str) # mov rax, 5 => ["mov", "rax", "5"] | xor rax, rax
     returnStr = str
     tmp = []
@@ -92,7 +107,6 @@ def replaceInStr(str):
     return [returnStr, reg] # ["mov ${REG}, ${VAR}", ["rax", 5]]
 
 def aliasDico(search, key, value):
-
     for keyword in search["values"]:
         if keyword == value:
             if not search["values"][keyword] == key:
