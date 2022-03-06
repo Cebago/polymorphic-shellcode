@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from functions.functions import *;
-"""
+
 print("Welcome to the Polymorphic Shellcode Tool from the Cebago TEAM")
 
 quit = False
@@ -21,8 +21,8 @@ while not quit:
         print("Which file do you want to polymorph ?")
         file = selectFile("input")
         if file != False:
-            #goToFunctionPolymorph
-            print("goToFunction")
+            readAsm(file)
+            print(f"Polymorphed file generated in 'shellcode/{file}'")
         print("=====End Polymorph File=====\n\n\n")
     elif choice == "2":
         print("\n\n\n=====See Assembly File=====")
@@ -33,7 +33,15 @@ while not quit:
             print("goToFunction")
         print("=====End See Assembly File=====\n\n\n")
     elif choice == "3":
-        print("Generated")
+        print("\n\n\n=====Generate Shellcode=====")
+        folder = chooseFolder()
+        print("Which file do you want to generate shellcode from :")
+        file = selectFile(folder)
+        if file != False:
+            # readAsm(file)
+            generateShellcode(folder, file)
+            # print("shellcode")
+        print("=====End Generate Shellcode=====\n\n\n")
     elif choice == "4":
         print("\n\n\n=====Shellcode scanner=====")
         print("Which file do you want to scan ?")
@@ -48,10 +56,10 @@ while not quit:
         quit = True
     else:
         print("Bad choice")
-"""
-search = openDico()
+
+#search = openDico()
 #toModify = readAsm(search)
-readAsm(search)
+#readAsm(search)
 #aliasDico(toModify,search)
 #replaceInStr("mov rax, rdx")
 #replaceInStr("mov r8, 5")
