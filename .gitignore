@@ -1,6 +1,6 @@
-output/*
+output/
 
-input/*
+input/
 
 functions/__pycache__/
 
