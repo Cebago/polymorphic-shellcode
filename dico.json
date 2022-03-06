@@ -9,22 +9,25 @@
         ],
         "add": [
             "add ${VAL1}, ${VAL2}\n",
-            "push ${REG}\nmov ${REG}, ${VAL1}\nadd ${REG}, ${VAL2}\nmov ${VAL1}, ${REG}, pop ${REG}\n",
-            "push ${REG}\nmov ${REG}, ${VAL2}\nadd ${REG}, ${VAL1}\nmov ${VAL1}, ${REG}, pop ${REG}\n",
-            "push ${REG}\npush ${VAL1}, pop ${REG}\nadd ${REG}, ${VAL2}\nadd ${VAL1}, ${REG}\npop ${REG}\n"
+            "\npush ${REG}\nmov ${REG}, ${VAL1}\nadd ${REG}, ${VAL2}\nmov ${VAL1}, ${REG}, pop ${REG}\n",
+            "\npush ${REG}\nmov ${REG}, ${VAL2}\nadd ${REG}, ${VAL1}\nmov ${VAL1}, ${REG}, pop ${REG}\n",
+            "\npush ${REG}\npush ${VAL1}, pop ${REG}\nadd ${REG}, ${VAL2}\nadd ${VAL1}, ${REG}\npop ${REG}\n"
         ],
         "sub": [
             "sub ${VAL1}, ${VAL2}\n",
-            "push ${REG}\nmov ${REG}, ${VAL1}\nsub ${REG}, ${VAL2}\nmov ${VAL1}, ${REG}\npop ${REG}\n",
-            "push ${REG}\nmov ${REG}, ${VAL2}\nsub ${REG}, ${VAL1}\nmov ${VAL1}, ${REG}\npop ${REG}\n",
-            "push ${REG}\npush ${VAL1}, pop ${REG}\nsub ${REG}, ${VAL2}\nadd ${VAL1}, ${REG}\npop ${REG}\n"
+            "\npush ${REG}\nmov ${REG}, ${VAL1}\nsub ${REG}, ${VAL2}\nmov ${VAL1}, ${REG}\npop ${REG}\n",
+            "\npush ${REG}\nmov ${REG}, ${VAL2}\nsub ${REG}, ${VAL1}\nmov ${VAL1}, ${REG}\npop ${REG}\n",
+            "\npush ${REG}\npush ${VAL1}, pop ${REG}\nsub ${REG}, ${VAL2}\nadd ${VAL1}, ${REG}\npop ${REG}\n"
             
         ],
         "setVal": [
             "mov ${VAL1}, ${VAL2}\n",
-            "push ${VAL2}\npop ${VAL1}\n",
-            "push ${REG}\npush ${VAL2}\npop ${REG}\nmov ${VAL1},${REG}\npop ${REG}\n",
-            "push ${REG}\nmov ${REG}, ${VAL2}\nmov ${VAL1},${REG}\npop ${REG}\n"
+            "\npush ${VAL2}\npop ${VAL1}\n",
+            "\npush ${REG}\npush ${VAL2}\npop ${REG}\nmov ${VAL1},${REG}\npop ${REG}\n",
+            "\npush ${REG}\nmov ${REG}, ${VAL2}\nmov ${VAL1},${REG}\npop ${REG}\n"
+        ],
+        "interupt" :[
+            "\nmov ${REG}, 80\nint ${REG}\n"
         ]
 
     },
@@ -32,6 +35,7 @@
         "xor ${VAL1}, ${VAL1}": "set0",
         "add ${VAL1}, ${VAL2}": "add",
         "sub ${VAL1}, ${VAL2}": "sub",
-        "mov ${VAL1}, ${VAL2}": "setVal"
+        "mov ${VAL1}, ${VAL2}": "setVal",
+        "int 80" : "interupt"
     }
 }
