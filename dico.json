@@ -2,31 +2,31 @@
     "values": {
         "set0": [
             "xor ${VAL1}, ${VAL1}\n",
-            "push ${REG}\nxor ${REG},${REG} \nmov ${VAL1},${REG} \npop ${REG}\n",
-            "mov ${VAL1}, 0xFF \nsub ${VAL1} 0xFF\n",
-            "mov ${VAL1}, 0x01 \ndec ${VAL1}\n",
-            "push 0xFF \npop ${VAL1} \nsub ${VAL1} 0xFF \n"
+            "\npush ${REG}\nxor ${REG}, ${REG} \nmov ${VAL1},${REG} \npop ${REG}\n",
+            "\nmov ${VAL1}, 0xFF \nsub ${VAL1}, 0xFF\n",
+            "\nmov ${VAL1}, 0x01 \ndec ${VAL1}\n",
+            "\npush 0xFF \npop ${VAL1} \nsub ${VAL1}, 0xFF \n"
         ],
         "add": [
             "add ${VAL1}, ${VAL2}\n",
-            "\npush ${REG}\nmov ${REG}, ${VAL1}\nadd ${REG}, ${VAL2}\nmov ${VAL1}, ${REG}, pop ${REG}\n",
-            "\npush ${REG}\nmov ${REG}, ${VAL2}\nadd ${REG}, ${VAL1}\nmov ${VAL1}, ${REG}, pop ${REG}\n",
-            "\npush ${REG}\npush ${VAL1}, pop ${REG}\nadd ${REG}, ${VAL2}\nadd ${VAL1}, ${REG}\npop ${REG}\n"
+            "\npush ${REG}\nmov ${REG}, ${VAL1}\nadd ${REG}, ${VAL2}\nmov ${VAL1}, ${REG}\npop ${REG}\n",
+            "\npush ${REG}\nmov ${REG}, ${VAL2}\nadd ${REG}, ${VAL1}\nmov ${VAL1}, ${REG}\npop ${REG}\n",
+            "\npush ${REG}\npush ${VAL1}\npop ${REG}\nadd ${REG}, ${VAL2}\nadd ${VAL1}, ${REG}\npop ${REG}\n"
         ],
         "sub": [
             "sub ${VAL1}, ${VAL2}\n",
             "\npush ${REG}\nmov ${REG}, ${VAL1}\nsub ${REG}, ${VAL2}\nmov ${VAL1}, ${REG}\npop ${REG}\n",
             "\npush ${REG}\nmov ${REG}, ${VAL2}\nsub ${REG}, ${VAL1}\nmov ${VAL1}, ${REG}\npop ${REG}\n",
-            "\npush ${REG}\npush ${VAL1}, pop ${REG}\nsub ${REG}, ${VAL2}\nadd ${VAL1}, ${REG}\npop ${REG}\n"
-            
+            "\npush ${REG}\npush ${VAL1}\npop ${REG}\nsub ${REG}, ${VAL2}\nadd ${VAL1}, ${REG}\npop ${REG}\n"
+
         ],
         "setVal": [
             "mov ${VAL1}, ${VAL2}\n",
             "\npush ${VAL2}\npop ${VAL1}\n",
-            "\npush ${REG}\npush ${VAL2}\npop ${REG}\nmov ${VAL1},${REG}\npop ${REG}\n",
-            "\npush ${REG}\nmov ${REG}, ${VAL2}\nmov ${VAL1},${REG}\npop ${REG}\n"
+            "\npush ${REG}\npush ${VAL2}\npop ${REG}\nmov ${VAL1}, ${REG}\npop ${REG}\n",
+            "\npush ${REG}\nmov ${REG}, ${VAL2}\nmov ${VAL1}, ${REG}\npop ${REG}\n"
         ],
-        "interupt" :[
+        "interupt": [
             "\nmov ${REG}, 80\nint ${REG}\n"
         ]
 
@@ -36,6 +36,6 @@
         "add ${VAL1}, ${VAL2}": "add",
         "sub ${VAL1}, ${VAL2}": "sub",
         "mov ${VAL1}, ${VAL2}": "setVal",
-        "int 80" : "interupt"
+        "int 80": "interupt"
     }
 }
