@@ -35,12 +35,13 @@ while not quit:
     elif choice == "3":
         print("\n\n\n=====Generate Shellcode=====")
         folder = chooseFolder()
-        print("Which file do you want to generate shellcode from :")
-        file = selectFile(folder)
-        if file != False:
-            # readAsm(file)
-            generateShellcode(folder, file)
-            # print("shellcode")
+        if folder != False:
+            print("Which file do you want to generate shellcode from :")
+            file = selectFile(folder)
+            if file != False:
+                # readAsm(file)
+                generateShellcode(folder, file)
+                # print("shellcode")
         print("=====End Generate Shellcode=====\n\n\n")
     elif choice == "4":
         print("\n\n\n=====Shellcode scanner=====")
