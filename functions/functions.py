@@ -2,6 +2,7 @@ import json
 import os
 import random
 import re
+import subprocess
 
 registers = ["rax", "rbx", "rcx", "rdx", "rdi", "rsi",
              "r8", "r9", "r10", "r11", "r12", "r13", "r14", "r15"]
@@ -217,4 +218,5 @@ def replaceInStr(inputString: str):
 def generateShellcode(folder:str, file:str):
     file = re.split("\.", file)[0]
     os.system(f"nasm -f elf64 -o ./shellcode/{file}.o ./{folder}/{file}.asm; ld -o ./shellcode/{file}.bin ./shellcode/{file}.o;")
-    #os.system("for i in $(objdump -d ./shellcode/{}.bin |grep ' ^ ' |cut -f2); do echo -n '\x'$i; done; echo > {}.txt; rm {}.o {}.bin".format(file, file, file, file))
+    os.system(f"./functions/shellcode.sh ./shellcode/{file}.bin ./shellcode/{file}.txt")
+    os.system(f"rm ./shellcode/*.o ./shellcode/*.bin")
