@@ -7,7 +7,7 @@ registers = ["rax", "rbx", "rcx", "rdx", "rdi", "rsi",
              "r8", "r9", "r10", "r11", "r12", "r13", "r14", "r15"]
 
 
-def selectFile(folder):
+def selectFile(folder:str):
     """
     Function to select the file to use 
     ```python
@@ -46,10 +46,11 @@ def openDico():
     return data
 
 
-def getRandomReg(current_reg_tab):
+def getRandomReg(current_reg_tab:list):
     """
     Pick a random value from the `registers` array 
     ```python
+    @param list current_reg_tab : The current registers already used
     @return str : Returns a string containing random 64-bits register
     ```
     """
@@ -59,10 +60,13 @@ def getRandomReg(current_reg_tab):
             return random_reg
 
 
-def replace(val_tab, replacement, random_reg=False):
+def replace(val_tab:list, replacement:str, random_reg:bool=False):
     """
     Replace formatted string with values
     ```python
+    @param list val_tab : The list of values to use
+    @param str replacement : The formatted string to replace in
+    @param bool random_reg : A boolean to know if the getRandomReg() functions has been used
     @return str : Returns the formatted string with values
     ```
     """
@@ -73,19 +77,29 @@ def replace(val_tab, replacement, random_reg=False):
     return replacement
 
 
-def getReplacement(tab_dico, action_key, val_tab):
-    replacement = random.choice(tab_dico["values"][action_key])
-    return replacement
-
-
-def getRandomReplacement(tab_dico, action_key, current_value):
+def getRandomReplacement(tab_dico:list, action_key:str, current_value:str):
+    """
+    Return a random instruction from the dico
+    ```python
+    @param list tab_dico : The list of values to usepossible instructions from the dico
+    @param str action_key : The key describing the action
+    @param str current_value : The current value 
+    @return str : Returns a formatted random string from the dico
+    ```
+    """
     while(True):
         random_replacement = random.choice(tab_dico[action_key])
         if(random_replacement != current_value):
             return random_replacement
 
 
-def readAsm(search):
+def readAsm(search:str):
+    """
+    Read the asked file and tranform it to a polymorphed one
+    ```python
+    @param str search : The JSON dico parsed as a string
+    ```
+    """
     with open("test.asm", "r") as input:
         with open("output.asm", "wt") as output:
             for line in input:
@@ -108,11 +122,20 @@ def readAsm(search):
                     output.write(line)
 
 
-def displayFile(folder, file):
+def displayFile(folder:str, file:str):
+    """
+    Display the file
+    """
     os.system('less ' + './' + folder + '/' + file)
 
 
-def verifyFile(folder, file):
+def verifyFile(folder:str, file:str):
+    """
+    Verify if a null-byte is in the shellcode
+    ```python
+    @return bool : Returns a boolean which is the result of a match of a null-byte shellcode
+    ```
+    """
     with open('./' + folder + '/' + file, 'r') as f:
         content = f.read()
     search = re.search(".*\\\\x00.*", str(content))
@@ -121,21 +144,52 @@ def verifyFile(folder, file):
     return True
 
 
-def replaceInStr(str):
+def replaceInStr(inputString:str):
+    """
+    Returns a formatted string
+    ```python
+    @param str inputString : The string to replace with keywords
+    @return list : Returns the formatted string with keywords
+    ```
+    ---
+    For example:
+    ```python
+    inputString = "mov rax, 5"
     reg = []
-    str = str.split(";")[0]
-    str = str.strip()
-    # mov rax, 5 => ["mov", "rax", "5"] | xor rax, rax
-    split = re.split(r"\, |\,| |\n| \n", str)
-    returnStr = str
+    split = ["mov", "rax", "5"]
+
+    # first iteration
+    "mov" not in registers
+    and not match the regex
+    inputString = "mov rax, 5"
+    reg = []
+
+    # second iteration
+    "rax" is in registers
+    replace "rax" by "${VAL1}"
+    inputString = "mov ${VAL1}, 5"
+    reg = ["rax"]
+
+    # third iteration
+    "5" is not in registers
+    and match the regex
+    replace "5" by "${VAL2}"
+    inputString = "mov ${VAL1}, ${VAL2}"
+    reg = ["rax" , "5"]
+
+    ```
+    """
+    reg = []
+    inputString = inputString.split(";")[0]
+    inputString = inputString.strip()
+    split = re.split(r"\, |\,| |\n| \n", inputString)
+    returnStr = inputString
     for iterator in range(0, len(split)):
         val = "${{VAL{}}}".format(iterator)
         if split[iterator] in registers:
-            # mov rax, 5 => mov ${REG}, 5
             returnStr = re.sub(split[iterator], val, returnStr)
-            reg.append(split[iterator].strip())  # [rax]
+            reg.append(split[iterator].strip())
         elif re.search("[0-9]+", split[iterator]):
-            # mov ${REG}, 5 => mov ${REG}, ${VAR}
             returnStr = re.sub(split[iterator], val, returnStr)
-            reg.append(split[iterator])  # [rax, 5]
-    return [returnStr.strip(), reg]  # ["mov ${REG}, ${VAR}", ["rax", 5]]
+            reg.append(split[iterator])
+    return [returnStr.strip(), reg]
