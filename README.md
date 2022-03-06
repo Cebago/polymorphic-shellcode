@@ -13,9 +13,9 @@ Transformer un code assembleur pour exécuter la même fonction mais avec des in
 
 Etapes:
 
-1. [ ] Rechercher des marqueurs pouvant être changé
-2. [ ] Associer un label de `dico.json` à ce marqueur
-3. [ ] Remplacer le marqueur par l'une des alternatives proposées dans le `dico.json`
+1. [X] Rechercher des marqueurs pouvant être changé
+2. [X] Associer un label de `dico.json` à ce marqueur
+3. [X] Remplacer le marqueur par l'une des alternatives proposées dans le `dico.json`
 
 ## Utilisation
 
