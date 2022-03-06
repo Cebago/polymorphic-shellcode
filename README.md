@@ -7,7 +7,7 @@
 
 ## Objectifs
 
-Transformer un code assembleur pour exécuter la même fonction mais avec des instructions différentes 
+Transformer un code assembleur pour exécuter la même fonction mais avec des instructions différentes
 
 ## Développement
 
