@@ -7,7 +7,25 @@ registers = ["rax", "rbx", "rcx", "rdx", "rdi", "rsi",
              "r8", "r9", "r10", "r11", "r12", "r13", "r14", "r15"]
 
 
-def selectFile(folder:str):
+def chooseFolder():
+    quit = False
+    while True:
+        print("In which folder do you want to generate the shellcode from :")
+        print("1- Input")
+        print("2- Output")
+        print("!q- Quit")
+        choice = input("Choice: ")
+        if (choice == "1"):
+            return "input"
+        elif (choice == "2"):
+            return "output"
+        elif (choice == "!q"):
+            return False
+        else:
+            print("Not a good value")
+
+
+def selectFile(folder: str):
     """
     Function to select the file to use 
     ```python
@@ -16,9 +34,9 @@ def selectFile(folder:str):
     ```
     """
     while True:
-        files = os.listdir('./'+folder)
+        files = os.listdir("./{}".format(folder))
         for x in range(len(files)):
-            print(str(x+1)+"- "+files[x])
+            print("{}- {}".format(str(x + 1), files[x]))
         print("!q- Quit")
         file = input("choice: ")
         try:
@@ -46,7 +64,7 @@ def openDico():
     return data
 
 
-def getRandomReg(current_reg_tab:list):
+def getRandomReg(current_reg_tab: list):
     """
     Pick a random value from the `registers` array 
     ```python
@@ -60,7 +78,7 @@ def getRandomReg(current_reg_tab:list):
             return random_reg
 
 
-def replace(val_tab:list, replacement:str, random_reg:bool=False):
+def replace(val_tab: list, replacement: str, random_reg: bool = False):
     """
     Replace formatted string with values
     ```python
@@ -77,7 +95,7 @@ def replace(val_tab:list, replacement:str, random_reg:bool=False):
     return replacement
 
 
-def getRandomReplacement(tab_dico:list, action_key:str, current_value:str):
+def getRandomReplacement(tab_dico: list, action_key: str, current_value: str):
     """
     Return a random instruction from the dico
     ```python
@@ -93,23 +111,23 @@ def getRandomReplacement(tab_dico:list, action_key:str, current_value:str):
             return random_replacement
 
 
-def readAsm(search:str):
+def readAsm(fileName: str):
     """
     Read the asked file and tranform it to a polymorphed one
     ```python
-    @param str search : The JSON dico parsed as a string
+    @param str fileName : The input file name
     ```
     """
-    with open("test.asm", "r") as input:
-        with open("output.asm", "wt") as output:
+    dico = openDico()
+    with open(f"./input/{fileName}", "r") as input:
+        with open(f"./output/{fileName}", "wt") as output:
             for line in input:
                 str = replaceInStr(line)
                 founded = False
-                for key in search["searches"]:
+                for key in dico["searches"]:
                     if str[0] == key:
-                        print(f"élément :{str}")
                         replace_value_patern = getRandomReplacement(
-                            search["values"], search["searches"][key], str)
+                            dico["values"], dico["searches"][key], str)
                         if re.search(r"\${REG}", replace_value_patern):
                             random_reg = getRandomReg(str[1])
                         else:
@@ -122,21 +140,23 @@ def readAsm(search:str):
                     output.write(line)
 
 
-def displayFile(folder:str, file:str):
+def displayFile(folder: str, file: str):
     """
     Display the file
     """
-    os.system('less ' + './' + folder + '/' + file)
+    # os.system('less ' + './' + folder + '/' + file)
+    os.system(f"less ./{folder}/{file}")
 
 
-def verifyFile(folder:str, file:str):
+def verifyFile(folder: str, file: str):
     """
     Verify if a null-byte is in the shellcode
     ```python
     @return bool : Returns a boolean which is the result of a match of a null-byte shellcode
     ```
     """
-    with open('./' + folder + '/' + file, 'r') as f:
+    # with open('./' + folder + '/' + file, 'r') as f:
+    with open(f"./{folder}/{file}", 'r') as f:
         content = f.read()
     search = re.search(".*\\\\x00.*", str(content))
     if search:
@@ -144,7 +164,7 @@ def verifyFile(folder:str, file:str):
     return True
 
 
-def replaceInStr(inputString:str):
+def replaceInStr(inputString: str):
     """
     Returns a formatted string
     ```python
@@ -193,3 +213,8 @@ def replaceInStr(inputString:str):
             returnStr = re.sub(split[iterator], val, returnStr)
             reg.append(split[iterator])
     return [returnStr.strip(), reg]
+
+def generateShellcode(folder:str, file:str):
+    file = re.split("\.", file)[0]
+    os.system(f"nasm -f elf64 -o ./shellcode/{file}.o ./{folder}/{file}.asm; ld -o ./shellcode/{file}.bin ./shellcode/{file}.o;")
+    #os.system("for i in $(objdump -d ./shellcode/{}.bin |grep ' ^ ' |cut -f2); do echo -n '\x'$i; done; echo > {}.txt; rm {}.o {}.bin".format(file, file, file, file))
