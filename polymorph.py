@@ -39,9 +39,7 @@ while not quit:
             print("Which file do you want to generate shellcode from :")
             file = selectFile(folder)
             if file != False:
-                # readAsm(file)
                 generateShellcode(folder, file)
-                # print("shellcode")
         print("=====End Generate Shellcode=====\n\n\n")
     elif choice == "4":
         print("\n\n\n=====Shellcode scanner=====")
@@ -57,12 +55,3 @@ while not quit:
         quit = True
     else:
         print("Bad choice")
-
-#search = openDico()
-#toModify = readAsm(search)
-#readAsm(search)
-#aliasDico(toModify,search)
-#replaceInStr("mov rax, rdx")
-#replaceInStr("mov r8, 5")
-#replaceInStr("pop rbx")
-#print(re.search(r"xor r[acd][xi], r[acd][xi]", "xor rax, rdi"))
