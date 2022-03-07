@@ -150,6 +150,10 @@ def readAsm(fileName: str):
 def displayFile(folder: str, file: str):
     """
     Display the file
+    ```python
+    @param str folder : The folder name
+    @param str file : The file name
+    ```
     """
     # os.system('less ' + './' + folder + '/' + file)
     os.system(f"less ./{folder}/{file}")
@@ -159,6 +163,8 @@ def verifyFile(folder: str, file: str):
     """
     Verify if a null-byte is in the shellcode
     ```python
+    @param str folder : The folder name
+    @param str file : The file name
     @return bool : Returns a boolean which is the result of a match of a null-byte shellcode
     ```
     """
