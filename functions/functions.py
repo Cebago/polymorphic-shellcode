@@ -229,6 +229,6 @@ def replaceInStr(inputString: str):
 
 def generateShellcode(folder:str, file:str):
     file = re.split("\.", file)[0]
-    os.system(f"nasm -f elf64 -o ./shellcode/{file}.o ./{folder}/{file}.asm; ld -o ./shellcode/{file}.bin ./shellcode/{file}.o;")
+    os.system(f"nasm -f elf64 -F stabs ./{folder}/{file}.asm -o ./shellcode/{file}.o  && ld -o ./shellcode/{file}.bin ./shellcode/{file}.o;")
     os.system(f"./functions/shellcode.sh ./shellcode/{file}.bin ./shellcode/{file}.txt")
     os.system(f"rm ./shellcode/*.o ./shellcode/*.bin 2> /dev/null > /dev/null")
