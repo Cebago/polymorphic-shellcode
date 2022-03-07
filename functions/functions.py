@@ -9,6 +9,12 @@ registers = ["rax", "rbx", "rcx", "rdx", "rdi", "rsi",
 
 
 def chooseFolder():
+    """
+    Function to select the folder to use 
+    ```python
+    @return str : Returns the folder choose by the user
+    ```
+    """
     quit = False
     while True:
         print("In which folder do you want to generate the shellcode from :")
@@ -31,7 +37,7 @@ def selectFile(folder: str):
     Function to select the file to use 
     ```python
     @param str folder : The folder path wich content files
-    @return file|bool : Returns the file descriptor of the specified one.
+    @return str|bool : Returns the file descriptor of the specified one.
     ```
     """
     while True:
