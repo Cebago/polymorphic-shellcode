@@ -129,18 +129,18 @@ def readAsm(fileName: str):
     with open(f"./input/{fileName}", "r") as input:
         with open(f"./output/{fileName}", "wt") as output:
             for line in input:
-                str = replaceInStr(line)
+                formattedString = replaceInStr(line)
                 founded = False
                 for key in dico["searches"]:
-                    if str[0] == key:
+                    if formattedString[0] == key:
                         replace_value_patern = getRandomReplacement(
-                            dico["values"], dico["searches"][key], str)
+                            dico["values"], dico["searches"][key], formattedString)
                         if re.search(r"\${REG}", replace_value_patern):
-                            random_reg = getRandomReg(str[1])
+                            random_reg = getRandomReg(formattedString[1])
                         else:
                             random_reg = False
                         replace_value = replace(
-                            str[1], replace_value_patern, random_reg)
+                            formattedString[1], replace_value_patern, random_reg)
                         output.write(replace_value)
                         founded = True
                 if not founded:
