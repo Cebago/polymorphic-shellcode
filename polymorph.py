@@ -49,7 +49,7 @@ while not quit:
             if verifyFile("shellcode", file):
                 print("No null bytes detected")
             else:
-                print("OhOh! A null byte was found")
+                print("Oh a null-byte was found but always try the shellcode :)")
         print("=====End Shellcode scanner=====\n\n\n")
     elif choice == "5":
         quit = True
