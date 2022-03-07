@@ -106,7 +106,7 @@ def getRandomReplacement(tab_dico: list, action_key: str, current_value: str):
     """
     Return a random instruction from the dico
     ```python
-    @param list tab_dico : The list of values to usepossible instructions from the dico
+    @param list tab_dico : The list of values to use with possible instructions from the dico
     @param str action_key : The key describing the action
     @param str current_value : The current value 
     @return str : Returns a formatted random string from the dico
